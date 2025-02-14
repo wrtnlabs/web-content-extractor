@@ -14,19 +14,28 @@ export function extractContentFromTextDensityMap(
   const contents: domhandler.AnyNode[] = [];
 
   function markAsContent(node: domhandler.AnyNode): void {
-    for (let i = 0; i < contents.length; ++i) {
-      const content = contents[i];
-
+    // Ignore the node if one of its parent is already in the contents
+    for (const content of contents) {
       if (isParentOf(content, node)) {
-        return;
-      }
-
-      if (isParentOf(node, content)) {
-        contents[i] = node;
         return;
       }
     }
 
+    // Collect all the indices of the children of the node in the contents
+    const childIndices: number[] = [];
+
+    for (let i = 0; i < contents.length; ++i) {
+      if (isParentOf(contents[i], node)) {
+        childIndices.push(i);
+      }
+    }
+
+    // Remove the children from the contents
+    for (let index = childIndices.length - 1; 0 <= index; --index) {
+      contents.splice(childIndices[index], 1);
+    }
+
+    // Add the node to the contents
     contents.push(node);
   }
 

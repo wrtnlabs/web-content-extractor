@@ -16,5 +16,8 @@ export function extractText(node: domhandler.AnyNode): string {
     fragments.push(extractText(child));
   }
 
-  return fragments.join(" ");
+  return fragments
+    .map((str) => str.trim())
+    .filter((str) => str.length !== 0)
+    .join(" ");
 }

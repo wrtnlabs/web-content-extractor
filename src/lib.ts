@@ -21,7 +21,10 @@ export function extractContent(html: string): string {
   const map = computeTextDensity(root);
 
   const contents = extractContentFromTextDensityMap(root, map);
-  const text = contents.map((node) => extractText(node)).join(" ");
+  const text = contents
+    .map((node) => extractText(node))
+    .filter((str) => str.length !== 0)
+    .join(" ");
 
   return text.trim();
 }
