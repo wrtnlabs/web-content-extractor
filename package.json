@@ -1,6 +1,6 @@
 {
   "name": "web-content-extractor",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "library for extracting content from HTML strings",
   "main": "lib.js",
   "type": "module",
