@@ -2,14 +2,19 @@
   "name": "@wrtnlabs/web-content-extractor",
   "version": "1.0.0",
   "description": "library for extracting content from HTML strings",
-  "main": "lib.js",
+  "main": "./dist/lib.js",
+  "module": "./dist/lib.mjs",
+  "types": "./dist/lib.d.ts",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "engines": {
     "node": ">=18.0.0"
   },
   "scripts": {
     "test": "vitest",
-    "build": "rimraf build && tsc"
+    "build": "tsup"
   },
   "repository": {
     "type": "git",
@@ -27,6 +32,7 @@
   "devDependencies": {
     "@types/node": "^22.13.2",
     "rimraf": "^6.0.1",
+    "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
   },
