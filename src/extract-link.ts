@@ -1,8 +1,31 @@
 import { ElementType } from "domelementtype";
 import * as domhandler from "domhandler";
+import { extractText } from "./extract-text.js";
 
-export function extractLink(contents: domhandler.AnyNode[]): string[] {
-  const links: string[] = [];
+/**
+ * Represents a link.
+ */
+export interface Link {
+  /**
+   * The URL of the link.
+   */
+  url: string;
+
+  /**
+   * The content of the link.
+   */
+  content: string;
+}
+
+/**
+ * Extracts links from the contents.
+ *
+ * @param contents - The contents to extract links from
+ *
+ * @returns The extracted links
+ */
+export function extractLink(contents: domhandler.AnyNode[]): Link[] {
+  const links: Link[] = [];
 
   for (const content of contents) {
     extractLinkFromNode(content, links);
@@ -11,7 +34,7 @@ export function extractLink(contents: domhandler.AnyNode[]): string[] {
   return links;
 }
 
-function extractLinkFromNode(node: domhandler.AnyNode, links: string[]): void {
+function extractLinkFromNode(node: domhandler.AnyNode, links: Link[]): void {
   if (node.type !== ElementType.Tag) {
     return;
   }
@@ -24,11 +47,13 @@ function extractLinkFromNode(node: domhandler.AnyNode, links: string[]): void {
     return;
   }
 
-  const link = node.attribs.href.trim();
+  const url = node.attribs.href.trim();
 
-  if (link.length === 0) {
+  if (url.length === 0) {
     return;
   }
 
-  links.push(link);
+  const content = extractText(node);
+
+  links.push({ url, content });
 }

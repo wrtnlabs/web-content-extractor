@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import { computeTextDensity } from "./compute-text-density.js";
 import { extractContentFromTextDensityMap } from "./extract-content.js";
-import { extractLink } from "./extract-link.js";
+import { extractLink, Link } from "./extract-link.js";
 import { extractText } from "./extract-text.js";
 import { stripNonContentTags } from "./strip-non-content-tags.js";
 
@@ -17,7 +17,7 @@ export interface ExtractedContent {
   /**
    * The links in the page.
    */
-  links: string[];
+  links: Link[];
 }
 
 /**
