@@ -55,5 +55,9 @@ function extractLinkFromNode(node: domhandler.AnyNode, links: Link[]): void {
 
   const content = extractText(node);
 
+  if (content.length === 0) {
+    return;
+  }
+
   links.push({ url, content });
 }
