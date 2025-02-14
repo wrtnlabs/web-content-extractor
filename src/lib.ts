@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { ElementType } from "domelementtype";
 import { computeTextDensity } from "./compute-text-density.js";
 import { extractContentFromTextDensityMap } from "./extract-content.js";
+import { extractLink } from "./extract-link.js";
 import { extractText } from "./extract-text.js";
 import { stripNonContentTags } from "./strip-non-content-tags.js";
 
@@ -43,25 +43,7 @@ export function extractContent(html: string): ExtractedContent {
     .join(" ");
 
   const content = text.trim();
-  let links = [];
-
-  for (const content of contents) {
-    if (content.type !== ElementType.Tag) {
-      continue;
-    }
-
-    if (content.name !== "a") {
-      continue;
-    }
-
-    const link = content.attribs.href.trim();
-
-    if (link.length === 0) {
-      continue;
-    }
-
-    links.push(link);
-  }
+  const links = extractLink(contents);
 
   return { content, links };
 }
