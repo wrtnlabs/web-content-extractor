@@ -1,0 +1,38 @@
+{
+  "name": "web-content-extractor",
+  "version": "0.1.0",
+  "description": "library for extracting content from HTML strings",
+  "main": "lib.js",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "test": "vitest",
+    "build": "rimraf build && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrtnlabs/web-content-extractor.git"
+  },
+  "keywords": [
+    "web"
+  ],
+  "author": "Shrimp <shrimp@wrtn.io>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wrtnlabs/web-content-extractor/issues"
+  },
+  "homepage": "https://github.com/wrtnlabs/web-content-extractor#readme",
+  "devDependencies": {
+    "@types/node": "^22.13.2",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "domelementtype": "^2.3.0",
+    "domhandler": "^5.0.3"
+  }
+}
