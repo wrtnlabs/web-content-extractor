@@ -1,8 +1,24 @@
 import * as cheerio from "cheerio";
-import { stripNonContentTags } from "./strip-non-content-tags.js";
+import { ElementType } from "domelementtype";
 import { computeTextDensity } from "./compute-text-density.js";
 import { extractContentFromTextDensityMap } from "./extract-content.js";
 import { extractText } from "./extract-text.js";
+import { stripNonContentTags } from "./strip-non-content-tags.js";
+
+/**
+ * The extracted content.
+ */
+export interface ExtractedContent {
+  /**
+   * The content of the page.
+   */
+  content: string;
+
+  /**
+   * The links in the page.
+   */
+  links: string[];
+}
 
 /**
  * Extracts content from an HTML string.
@@ -11,7 +27,7 @@ import { extractText } from "./extract-text.js";
  *
  * @returns The extracted content
  */
-export function extractContent(html: string): string {
+export function extractContent(html: string): ExtractedContent {
   const $ = cheerio.load(html);
   const body = $("body");
 
@@ -26,5 +42,26 @@ export function extractContent(html: string): string {
     .filter((str) => str.length !== 0)
     .join(" ");
 
-  return text.trim();
+  const content = text.trim();
+  let links = [];
+
+  for (const content of contents) {
+    if (content.type !== ElementType.Tag) {
+      continue;
+    }
+
+    if (content.name !== "a") {
+      continue;
+    }
+
+    const link = content.attribs.href.trim();
+
+    if (link.length === 0) {
+      continue;
+    }
+
+    links.push(link);
+  }
+
+  return { content, links };
 }
