@@ -1,5 +1,5 @@
 {
-  "name": "web-content-extractor",
+  "name": "@wrtnlabs/web-content-extractor",
   "version": "1.0.0",
   "description": "library for extracting content from HTML strings",
   "main": "lib.js",

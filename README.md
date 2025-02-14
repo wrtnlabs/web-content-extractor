@@ -7,7 +7,7 @@ It is an one of implementation of the paper [DOM Based Content Extraction via Te
 ## Usage
 
 ```ts
-import { extractContent } from "web-content-extractor";
+import { extractContent } from "@wrtnlabs/web-content-extractor";
 
 const content = extractContent(html);
 ```
