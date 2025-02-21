@@ -31,7 +31,6 @@
   "homepage": "https://github.com/wrtnlabs/web-content-extractor#readme",
   "devDependencies": {
     "@types/node": "^22.13.2",
-    "rimraf": "^6.0.1",
     "tsup": "^8.3.6",
     "typescript": "^5.7.3",
     "vitest": "^3.0.5"
