@@ -9,7 +9,14 @@ It is an one of implementation of the paper [DOM Based Content Extraction via Te
 ```ts
 import { extractContent } from "@wrtnlabs/web-content-extractor";
 
-const content = extractContent(html);
+const { content, links } = extractContent(html);
+
+console.log("content", content); // The content of the page; string
+
+for (const link of links) {
+  console.log("url", link.url); // The URL of the link
+  console.log("content", link.content); // The content of the link
+}
 ```
 
 ## Note
