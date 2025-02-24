@@ -13,6 +13,10 @@ const { content, links } = extractContent(html);
 
 console.log("content", content); // The content of the page; string
 
+for (const fragment of contentHtmls) {
+  console.log("fragment", fragment); // The fragment of the content; string
+}
+
 for (const link of links) {
   console.log("url", link.url); // The URL of the link
   console.log("content", link.content); // The content of the link
