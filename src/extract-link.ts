@@ -47,7 +47,7 @@ function extractLinkFromNode(node: domhandler.AnyNode, links: Link[]): void {
     return;
   }
 
-  const url = node.attribs.href.trim();
+  const url = node.attribs?.href.trim();
 
   if (url.length === 0) {
     return;
