@@ -15,6 +15,17 @@ export interface ExtractedContent {
   content: string;
 
   /**
+   * The list of content HTMLs.
+   *
+   * Each element is the fragment (HTML subtree) serialized as a string that is
+   * part of the `content`.
+   *
+   * It is useful if you need to access to the original HTML of the content
+   * you extracted.
+   */
+  contentHtmls: string[];
+
+  /**
    * The links in the page.
    */
   links: Link[];
@@ -43,7 +54,11 @@ export function extractContent(html: string): ExtractedContent {
     .join(" ");
 
   const content = text.trim();
+  console.log("contents.length", contents.length);
+  const contentHtmls = contents.map((node) =>
+    cheerio.load(node, null, false).html()
+  );
   const links = extractLink(contents);
 
-  return { content, links };
+  return { content, contentHtmls, links };
 }
