@@ -1,6 +1,7 @@
 import * as cheerio from "cheerio";
 import { computeTextDensity } from "./compute-text-density.js";
 import { extractContentFromTextDensityMap } from "./extract-content.js";
+import { extractDescription, extractTitle } from "./extract-head.js";
 import { extractLink, Link } from "./extract-link.js";
 import { extractText } from "./extract-text.js";
 import { stripNonContentTags } from "./strip-non-content-tags.js";
@@ -9,6 +10,16 @@ import { stripNonContentTags } from "./strip-non-content-tags.js";
  * The extracted content.
  */
 export interface ExtractedContent {
+  /**
+   * The title of the page.
+   */
+  title?: string;
+
+  /**
+   * The description of the page.
+   */
+  description?: string;
+
   /**
    * The content of the page.
    */
@@ -60,5 +71,8 @@ export function extractContent(html: string): ExtractedContent {
   );
   const links = extractLink(contents);
 
-  return { content, contentHtmls, links };
+  const title = extractTitle($);
+  const description = extractDescription($);
+
+  return { title, description, content, contentHtmls, links };
 }
