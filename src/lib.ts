@@ -65,7 +65,7 @@ export function extractContent(html: string): ExtractedContent {
     .join(" ");
 
   const content = text.trim();
-  console.log("contents.length", contents.length);
+
   const contentHtmls = contents.map((node) =>
     cheerio.load(node, null, false).html()
   );
