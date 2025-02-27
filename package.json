@@ -1,6 +1,6 @@
 {
   "name": "@wrtnlabs/web-content-extractor",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "library for extracting content from HTML strings",
   "type": "module",
   "main": "./dist/lib.cjs",
