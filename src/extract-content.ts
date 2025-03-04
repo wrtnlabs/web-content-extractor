@@ -47,11 +47,9 @@ export function extractContentFromTextDensityMap(
 function computeThreshold(
   map: Map<domhandler.AnyNode, TextDensityStat>
 ): number {
-  const maximumDensitySumStat = map
-    .values()
-    .reduce((prev, current) =>
-      prev.densitySum < current.densitySum ? current : prev
-    );
+  const maximumDensitySumStat = Array.from(map.values()).reduce(
+    (prev, current) => (prev.densitySum < current.densitySum ? current : prev)
+  );
 
   let candidateStats: TextDensityStat[] = [maximumDensitySumStat];
   let parent = maximumDensitySumStat.element.parent;
