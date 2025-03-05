@@ -4,6 +4,14 @@ A small and fast library for extracting content from HTML.
 
 It is an one of implementation of the paper [DOM Based Content Extraction via Text Density](https://ofey.me/assets/pdf/cetd-sigir11.pdf).
 
+## Installation
+
+To install via NPM:
+
+```bash
+npm i @wrtnlabs/web-content-extractor
+```
+
 ## Usage
 
 ```ts
