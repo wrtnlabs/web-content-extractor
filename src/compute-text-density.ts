@@ -39,18 +39,19 @@ export function computeTextDensity(
   for (const stat of stats.values()) {
     stat.density = computeTextDensityOfNode(stat, rootLinkTextRatio);
 
-    let parent = stat.element.parent;
+    const parent = stat.element.parent;
 
-    while (parent != null && parent.type === ElementType.Tag) {
-      const parentStat = stats.get(parent);
-
-      if (parentStat == null) {
-        break;
-      }
-
-      parentStat.densitySum += stat.density;
-      parent = parent.parent;
+    if (parent == null) {
+      continue;
     }
+
+    const parentStat = stats.get(parent);
+
+    if (parentStat == null) {
+      continue;
+    }
+
+    parentStat.densitySum += stat.density;
   }
 
   return stats;
