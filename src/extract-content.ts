@@ -65,11 +65,11 @@ function computeThreshold(
     parent = parent.parent;
   }
 
-  const minimumDensitySumStatInCandidateStats = candidateStats.reduce(
-    (prev, current) => (prev.densitySum < current.densitySum ? prev : current)
+  const minimumDensityStatInCandidateStats = candidateStats.reduce(
+    (prev, current) => (prev.density < current.density ? prev : current)
   );
 
-  return minimumDensitySumStatInCandidateStats.densitySum;
+  return minimumDensityStatInCandidateStats.density;
 }
 
 function extractContentFromNode(
@@ -84,19 +84,57 @@ function extractContentFromNode(
     return;
   }
 
-  if (stat.densitySum < threshold) {
+  if (stat.density < threshold) {
     return;
   }
 
-  markAsContent(node);
+  const maxDensitySumDescendant = findMaxDensitySumInDescendants(node, map);
+
+  if (maxDensitySumDescendant == null) {
+    return;
+  }
 
   if (node.type !== ElementType.Tag) {
     return;
   }
 
+  markAsContent(maxDensitySumDescendant);
+
   for (const child of node.children) {
     extractContentFromNode(child, map, threshold, markAsContent);
   }
+}
+
+function findMaxDensitySumInDescendants(
+  node: domhandler.AnyNode,
+  map: Map<domhandler.AnyNode, TextDensityStat>
+): domhandler.AnyNode | null {
+  const stat = map.get(node)!;
+  const element = stat.element;
+
+  if (element.type !== ElementType.Tag) {
+    return null;
+  }
+
+  let maxDensitySum = stat.densitySum;
+  let maxDensitySumDescendant = node;
+
+  for (const child of element.children) {
+    const descendant = findMaxDensitySumInDescendants(child, map);
+
+    if (descendant == null) {
+      continue;
+    }
+
+    const stat = map.get(descendant)!;
+
+    if (maxDensitySum < stat.densitySum) {
+      maxDensitySum = stat.densitySum;
+      maxDensitySumDescendant = descendant;
+    }
+  }
+
+  return maxDensitySumDescendant;
 }
 
 function isParentOf(
