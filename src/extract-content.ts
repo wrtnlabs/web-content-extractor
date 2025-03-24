@@ -120,6 +120,10 @@ function findMaxDensitySumInDescendants(
   let maxDensitySumDescendant = node;
 
   for (const child of element.children) {
+    if (child.type !== ElementType.Tag) {
+      continue;
+    }
+
     const descendant = findMaxDensitySumInDescendants(child, map);
 
     if (descendant == null) {
