@@ -42,7 +42,7 @@ export function computeTextDensity(
     let parent = stat.element.parent;
 
     while (parent != null && parent.type === ElementType.Tag) {
-      const parentStat = stats.get(parent)!;
+      const parentStat = stats.get(parent);
 
       if (parentStat == null) {
         break;
@@ -127,14 +127,14 @@ function augmentStats(
     densitySum: 0,
     tagCount: 0,
     textLength,
-    linkTagCount: isLink ? 1 : 0,
+    linkTagCount: 0,
     linkTextLength: isLink ? textLength : 0,
   });
 
   let parent = node.parent;
 
   while (parent != null && parent.type === ElementType.Tag) {
-    const stat = stats.get(parent)!;
+    const stat = stats.get(parent);
 
     if (stat == null) {
       break;
