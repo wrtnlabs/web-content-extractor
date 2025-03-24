@@ -59,6 +59,9 @@ export function extractContent(html: string): ExtractedContent {
   const map = computeTextDensity(root);
 
   const contents = extractContentFromTextDensityMap(root, map);
+
+  // TODO: Contents should be sorted by the order of appearance in the HTML
+  //       to ensure the content is consistent with the HTML structure.
   const text = contents
     .map((node) => extractText(node))
     .filter((str) => str.length !== 0)
