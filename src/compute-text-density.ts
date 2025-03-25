@@ -2,6 +2,7 @@ import { ElementType } from "domelementtype";
 import * as domhandler from "domhandler";
 
 export interface TextDensityStat {
+  order: number;
   element: domhandler.AnyNode;
   density: number;
   densitySum: number;
@@ -123,6 +124,7 @@ function augmentStats(
   const isLink = node.type === ElementType.Tag && node.name === "a";
 
   stats.set(node, {
+    order: stats.size,
     element: node,
     density: 0,
     densitySum: 0,
