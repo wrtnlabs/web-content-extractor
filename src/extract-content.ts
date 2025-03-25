@@ -16,6 +16,10 @@ export function extractContentFromTextDensityMap(
   function markAsContent(node: domhandler.AnyNode): void {
     // Ignore the node if one of its parent is already in the contents
     for (const content of contents) {
+      if (content === node) {
+        return;
+      }
+
       if (isParentOf(content, node)) {
         return;
       }
@@ -25,7 +29,7 @@ export function extractContentFromTextDensityMap(
     const childIndices: number[] = [];
 
     for (let i = 0; i < contents.length; ++i) {
-      if (isParentOf(contents[i], node)) {
+      if (isParentOf(node, contents[i])) {
         childIndices.push(i);
       }
     }
@@ -78,6 +82,10 @@ function extractContentFromNode(
   threshold: number,
   markAsContent: (node: domhandler.AnyNode) => void
 ): void {
+  if (node.type !== ElementType.Tag) {
+    return;
+  }
+
   const stat = map.get(node);
 
   if (stat == null) {
@@ -94,7 +102,7 @@ function extractContentFromNode(
     return;
   }
 
-  if (node.type !== ElementType.Tag) {
+  if (maxDensitySumDescendant.type !== ElementType.Tag) {
     return;
   }
 
