@@ -159,23 +159,27 @@ function augmentStats(
   }
 }
 
-function computeTextLengthOfNode(node: domhandler.AnyNode): number {
-  if (node.type === ElementType.Text) {
-    return node.data.length;
-  }
-
-  if (node.type !== ElementType.Tag) {
-    return 0;
-  }
-
+function computeTextLengthOfNode(node: domhandler.Element): number {
   let length = 0;
 
   for (const child of node.children) {
-    if (child.type !== ElementType.Text) {
+    let childLength = 0;
+
+    if (child.type === ElementType.Text) {
+      childLength = child.data.trim().length;
+    } else if (child.type === ElementType.Tag) {
+      childLength = computeTextLengthOfNode(child);
+    }
+
+    if (childLength === 0) {
       continue;
     }
 
-    length += child.data.length;
+    if (length !== 0) {
+      length += 1;
+    }
+
+    length += childLength;
   }
 
   return length;

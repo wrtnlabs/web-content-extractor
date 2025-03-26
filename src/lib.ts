@@ -51,14 +51,18 @@ export interface ExtractedContent {
  */
 export function extractContent(html: string): ExtractedContent {
   const $ = cheerio.load(html);
-  const body = $("body");
 
-  stripNonContentTags(body);
+  stripNonContentTags($);
 
-  const root = body[0];
-  const map = computeTextDensity(root);
+  const root = $.root().children().find("body");
+  const rootNode = root.get(0);
 
-  const contents = extractContentFromTextDensityMap(root, map);
+  if (rootNode == null) {
+    throw new Error("no body tag found");
+  }
+
+  const map = computeTextDensity(rootNode);
+  const contents = extractContentFromTextDensityMap(rootNode, map);
 
   const text = contents
     .sort((a, b) => map.get(a)!.order - map.get(b)!.order)
