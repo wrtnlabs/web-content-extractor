@@ -12,17 +12,13 @@ const NON_CONTENT_TAGS = [
   "nav",
   "header",
   "footer",
-  // "aside",
   "img",
   "svg",
-  // "figure",
-  // "figcaption",
   "video",
   "audio",
   "form",
   "label",
   "input",
-  // "textarea",
   "select",
   "option",
   "button",
@@ -32,6 +28,13 @@ const NON_CONTENT_TAGS = [
   "canvas",
   "map",
   "area",
+  "picture",
+  "source",
+  "track",
+  "wbr",
+  "slot",
+  "template",
+  "datalist",
 ];
 
 /**
@@ -41,12 +44,12 @@ const NON_CONTENT_TAGS = [
  *
  * @param $ - The cheerio instance
  */
-export function stripNonContentTags($: cheerio.Cheerio<domhandler.Element>) {
+export function stripNonContentTags($: cheerio.CheerioAPI) {
   for (const tag of NON_CONTENT_TAGS) {
-    $.find(tag).remove();
+    $(tag).remove();
   }
 
-  $.find("*")
+  $("*")
     .contents()
     .filter(function () {
       return this.type === ElementType.Comment;
