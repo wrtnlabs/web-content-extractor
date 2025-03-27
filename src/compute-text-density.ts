@@ -163,15 +163,13 @@ function computeTextLengthOfNode(node: domhandler.Element): number {
   let length = 0;
 
   for (const child of node.children) {
-    let childLength = 0;
-
-    if (child.type === ElementType.Text) {
-      childLength = child.data.trim().length;
-    } else if (child.type === ElementType.Tag) {
-      childLength = computeTextLengthOfNode(child);
+    if (child.type !== ElementType.Text) {
+      continue;
     }
 
-    if (childLength === 0) {
+    const textLength = child.data.trim().length;
+
+    if (textLength === 0) {
       continue;
     }
 
@@ -179,7 +177,7 @@ function computeTextLengthOfNode(node: domhandler.Element): number {
       length += 1;
     }
 
-    length += childLength;
+    length += textLength;
   }
 
   return length;
